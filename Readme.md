@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Данила Аветисян](https://up.htmlacademy.ru/ecmascript/15/user/1631205).
-* Наставник: `Неизвестно`.
+* Наставник: [Raman Lauryniuk](https://up.htmlacademy.ru/ecmascript/15/user/1666565).
 
 ---
 
