@@ -1,12 +1,6 @@
 import dayjs from 'dayjs';
 import {generateComments} from './comment.js';
-
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+import {getRandomInteger} from '../utils';
 
 const getRandomArbitrary = (min, max) => Math.random() * (max - min) + min;
 
