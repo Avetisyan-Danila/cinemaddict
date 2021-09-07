@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {nanoid} from 'nanoid';
 import {generateComments} from './comment.js';
 import {getRandomInteger} from '../utils/common.js';
 
@@ -184,6 +185,7 @@ const generateAgeRating = () => {
 };
 
 export const generateFilm = () => ({
+  id: nanoid(),
   title: generateFilmTitle(),
   description: generateDescription(),
   poster: generatePoster(),
