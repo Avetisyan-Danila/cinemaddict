@@ -7,6 +7,8 @@ import NoFilmsView from '../view/no-films.js';
 import FilmPresenter from './film.js';
 import {updateItem} from '../utils/common.js';
 import {render, RenderPosition, remove} from '../utils/render.js';
+import {sortFilmsByDate, sortFilmsByRating} from '../utils/sort.js';
+import {SortType} from '../const.js';
 
 const FILMS_COUNT_PER_STEP = 5;
 
@@ -15,6 +17,7 @@ export default class Films {
     this._boardContainer = boardContainer;
     this._renderedFilmsCount = FILMS_COUNT_PER_STEP;
     this._filmPresenter = new Map();
+    this._currentSortType = SortType.DEFAULT;
 
     this._filmComponent = new FilmsView();
     this._filmListComponent = new FilmsListView();
@@ -25,21 +28,50 @@ export default class Films {
 
     this._handleFilmChange = this._handleFilmChange.bind(this);
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(films) {
     this._films = films.slice();
+    this._sourcedFilms = films.slice();
 
     this._renderBoard();
   }
 
   _handleFilmChange(updatedFilm) {
     this._films = updateItem(this._films, updatedFilm);
+    this._sourcedFilms = updateItem(this._sourcedFilms, updatedFilm);
     this._filmPresenter.get(updatedFilm.id).init(updatedFilm);
+  }
+
+  _sortFilms(sortType) {
+    switch (sortType) {
+      case SortType.DATE:
+        this._films.sort(sortFilmsByDate);
+        break;
+      case SortType.RATING:
+        this._films.sort(sortFilmsByRating);
+        break;
+      default:
+        this._films = this._sourcedFilms.slice();
+    }
+
+    this._currentSortType = sortType;
+  }
+
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+
+    this._sortFilms(sortType);
+    this._clearFilmsList();
+    this._renderFilmsList();
   }
 
   _renderSort() {
     render(this._boardContainer, this._sortComponent, RenderPosition.BEFOREEND);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderFilm(film) {
