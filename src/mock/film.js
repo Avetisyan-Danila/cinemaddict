@@ -63,7 +63,7 @@ const generatePoster = () => {
 };
 
 const generateDate = () => {
-  const maxDaysGap = 1095;
+  const maxDaysGap = 7665;
   const daysGap = getRandomInteger(-maxDaysGap, 0);
   return dayjs().add(daysGap, 'day').toDate();
 };
